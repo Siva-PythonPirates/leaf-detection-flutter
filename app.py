@@ -1,14 +1,10 @@
-import os
-import requests
-import pandas as pd
 import streamlit as st
 from transformers import pipeline, AutoImageProcessor, AutoModelForImageClassification
 from PIL import Image
 import google.generativeai as genai
-from google.generativeai import generative_models
-
+import api
 # Gemini AI API
-api_key = "AIzaSyBFvdQlmO4yqipuNs-l7wd37xWgZ34dVV8"
+api_key = api.api_key
 
 
 # Image classification
