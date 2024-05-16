@@ -4,7 +4,7 @@ from PIL import Image
 import google.generativeai as genai
 import api
 # Gemini AI API
-api_key = api.api_key
+api_key = "AIzaSyBFvdQlmO4yqipuNs-l7wd37xWgZ34dVV8"
 
 
 # Image classification
@@ -39,9 +39,12 @@ def main():
                 # Generate information using GenerativeAI
                 genai.configure(api_key=api_key)
                 model = genai.GenerativeModel(model_name="gemini-pro")
+
+                # Crafting the most efficient prompt using prompt engineering technique
                 prompt = f"Provide detailed information about the medicinal plant '{label}'. Please include its botanical name, common names, medicinal properties, traditional uses, active compounds, potential health benefits, and any known contraindications or side effects. Additionally, discuss who can benefit from its usage, such as individuals with specific health conditions or symptoms, and who should avoid it, such as pregnant or breastfeeding women, individuals with certain medical conditions, or those taking specific medications. Please provide evidence-based information and cite credible sources where applicable."
                 
-                with st.spinner("Generating information..."):
+                # Adding a spinner to make sense while generating details
+                with st.spinner(f"Generating information about {label}..."):
                     response = model.generate_content(prompt)
                     if response:
                         st.write(response.text)
