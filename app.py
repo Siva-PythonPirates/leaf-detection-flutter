@@ -34,19 +34,25 @@ def main():
         clicked = st.form_submit_button("Predict")
 
         if clicked:
-            result = predict(image)
-            label = result['label']
-            score = result['score'] * 100
-            st.success(f"The predicted image is {label} with {score:.2f}% confidence.")
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel(model_name="gemini-pro")
+            try:
+                result = predict(image)
+                label = result['label']
+                score = result['score'] * 100
+                st.success(f"The predicted image is {label} with {score:.2f}% confidence.")
+                
+                # Generate information using GenerativeAI
+                genai.configure(api_key=api_key)
+                model = genai.GenerativeModel(model_name="gemini-pro")
+                prompt = f"Provide detailed information about the medicinal plant '{label}'. Please include its botanical name, common names, medicinal properties, traditional uses, active compounds, potential health benefits, and any known contraindications or side effects. Additionally, discuss who can benefit from its usage, such as individuals with specific health conditions or symptoms, and who should avoid it, such as pregnant or breastfeeding women, individuals with certain medical conditions, or those taking specific medications. Please provide evidence-based information and cite credible sources where applicable."
+                
+                with st.spinner("Generating information..."):
+                    response = model.generate_content(prompt)
+                    if response:
+                        st.write(response.text)
+                    else:
+                        st.error("Failed to generate information. Please try again later.")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 
-            prompt = f"Provide detailed information about the medicinal plant '{label}'. Please include its botanical name, common names, medicinal properties, traditional uses, active compounds, potential health benefits, and any known contraindications or side effects. Additionally, discuss who can benefit from its usage, such as individuals with specific health conditions or symptoms, and who should avoid it, such as pregnant or breastfeeding women, individuals with certain medical conditions, or those taking specific medications. Please provide evidence-based information and cite credible sources where applicable."
-            # content = [prompt]
-            response = model.generate_content(prompt)
-
-            print(response.text)
-
-            st.write(response.text)
 if __name__ == "__main__":
     main()
