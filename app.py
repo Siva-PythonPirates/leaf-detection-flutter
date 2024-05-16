@@ -41,7 +41,7 @@ def main():
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel(model_name="gemini-pro")
 
-            prompt = "Provide detailed information about the medicinal plant 'Tulasi'. Please include its botanical name, common names, medicinal properties, traditional uses, active compounds, potential health benefits, and any known contraindications or side effects. Additionally, discuss who can benefit from its usage, such as individuals with specific health conditions or symptoms, and who should avoid it, such as pregnant or breastfeeding women, individuals with certain medical conditions, or those taking specific medications. Please provide evidence-based information and cite credible sources where applicable."
+            prompt = f"Provide detailed information about the medicinal plant '{label}'. Please include its botanical name, common names, medicinal properties, traditional uses, active compounds, potential health benefits, and any known contraindications or side effects. Additionally, discuss who can benefit from its usage, such as individuals with specific health conditions or symptoms, and who should avoid it, such as pregnant or breastfeeding women, individuals with certain medical conditions, or those taking specific medications. Please provide evidence-based information and cite credible sources where applicable."
             # content = [prompt]
             response = model.generate_content(prompt)
 
